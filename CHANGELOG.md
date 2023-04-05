@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/edwardramirez31/cdk-app-template/compare/v1.0.3...v1.0.4) (2023-04-05)
+
+
+### Bug Fixes
+
+* setup cloudwatch logs role for api gateway ([23238ca](https://github.com/edwardramirez31/cdk-app-template/commit/23238cae3063028ff9d3ca77dbd2ec4250052214))
+
 ## [1.0.3](https://github.com/edwardramirez31/cdk-app-template/compare/v1.0.2...v1.0.3) (2023-04-05)
 
 
