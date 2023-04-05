@@ -6,3 +6,10 @@ package-lock.json
 dist
 coverage
 pnpm-lock.yaml
+.eslintrc
+cdk*
+.lintstagedrc.json
+CHANGELOG.md
+jest.config.js
+README.md
+tsconfig.json

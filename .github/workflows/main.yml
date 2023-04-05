@@ -36,6 +36,9 @@ jobs:
     name: Run semantic release
     runs-on: ubuntu-latest
     needs: test
+    permissions:
+      id-token: write
+      contents: read
     if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v3
@@ -58,9 +61,9 @@ jobs:
           role-duration-seconds: 900
           aws-region: us-east-1
       - name: Deploy CDK Stack
-        run: npx cdk deploy
+        run: npx cdk synth && npx cdk deploy
         env:
-          ARTIFACT_NAME: ${{ github.repository }}
+          ARTIFACT_NAME: ${{ secrets.ARTIFACT_NAME }}
           ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
           REGION: ${{ secrets.REGION }}
           API_TRACE_ENABLED: ${{ secrets.API_TRACE_ENABLED }}
