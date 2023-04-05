@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/edwardramirez31/cdk-app-template/compare/v1.0.2...v1.0.3) (2023-04-05)
+
+
+### Bug Fixes
+
+* avoid requiring approval for deployment ([da70bfc](https://github.com/edwardramirez31/cdk-app-template/commit/da70bfc4972f1586216f180d8a35aa6321ee5055))
+
 ## [1.0.2](https://github.com/edwardramirez31/cdk-app-template/compare/v1.0.1...v1.0.2) (2023-04-05)
 
 
