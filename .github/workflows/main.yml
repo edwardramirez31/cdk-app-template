@@ -30,7 +30,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Run the tests and generate coverage report
-        run: npm run check
+        run: npm run inspect
 
   release:
     name: Run semantic release

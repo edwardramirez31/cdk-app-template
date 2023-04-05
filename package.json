@@ -11,10 +11,11 @@
     "cdk": "cdk",
     "check-lint": "lint-staged",
     "check-type": "tsc --noEmit",
-    "check-test": "jest",
     "check": "concurrently \"npm:check-*\"",
+    "inspect": "concurrently \"npm:test\" \"npm:check-type\" \"npm:format-*\"",
     "format": "prettier --write .",
-    "format:check": "prettier --check .",
+    "format-check": "prettier --check .",
+    "format-lint": "eslint --ext .js,.jsx,.ts,.tsx --max-warnings=0",
     "prepare": "husky install"
   },
   "devDependencies": {

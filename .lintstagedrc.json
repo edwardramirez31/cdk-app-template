@@ -1,4 +1,4 @@
 {
-  "src/**/*.{ts,tsx,js,jsx,scss}": ["prettier --write",  "eslint --ext .js,.jsx,.ts,.tsx --max-warnings=0"],
+  "src/**/*.{ts,tsx,js,jsx,scss}": ["prettier --write",  "eslint --ext .js,.jsx,.ts,.tsx --max-warnings=0", "jest --bail --findRelatedTests"],
   "src/**/*.{json}": ["prettier --write"]
 }
