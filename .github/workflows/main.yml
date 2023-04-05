@@ -75,7 +75,7 @@ jobs:
           role-duration-seconds: 900
           aws-region: us-east-1
       - name: Deploy CDK Stack
-        run: npx cdk synth && npx cdk deploy
+        run: npx cdk synth && npx cdk deploy --require-approval never
         env:
           ARTIFACT_NAME: ${{ secrets.ARTIFACT_NAME }}
           ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
