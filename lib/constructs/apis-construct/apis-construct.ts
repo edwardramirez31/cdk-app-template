@@ -11,6 +11,7 @@ export default class ApisConstruct extends Construct {
     super(scope, id);
 
     this.apiGateway = new RestApi(this, 'PostRestApi', {
+      cloudWatchRole: true,
       deployOptions: {
         tracingEnabled: true,
         loggingLevel: MethodLoggingLevel.INFO,
