@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/edwardramirez31/cdk-app-template/compare/v1.0.1...v1.0.2) (2023-04-05)
+
+
+### Bug Fixes
+
+* set deploy job ([446c2ff](https://github.com/edwardramirez31/cdk-app-template/commit/446c2fff10065c25e35d6da42b69a9ff9eb33305))
+
 ## [1.0.1](https://github.com/edwardramirez31/cdk-app-template/compare/v1.0.0...v1.0.1) (2023-04-05)
 
 
