@@ -1,6 +1,13 @@
 import * as cdk from 'aws-cdk-lib';
-import { Template, Match } from 'aws-cdk-lib/assertions';
+import { Template } from 'aws-cdk-lib/assertions';
+
+import { StackConfig } from '../lib/config/stack-configuration';
 import * as Workshop from '../lib/workshop-stack';
+
+beforeAll(() => {
+  StackConfig.name = 'test';
+  StackConfig.environment = 'local';
+});
 
 test('SQS Queue and SNS Topic Created', () => {
   const app = new cdk.App();
@@ -10,8 +17,13 @@ test('SQS Queue and SNS Topic Created', () => {
 
   const template = Template.fromStack(stack);
 
-  template.hasResourceProperties('AWS::SQS::Queue', {
-    VisibilityTimeout: 300
+  template.hasResourceProperties('AWS::Lambda::Function', {
+    FunctionName: `${StackConfig.name}-create-post-${StackConfig.environment}`,
   });
-  template.resourceCountIs('AWS::SNS::Topic', 1);
+
+  template.hasResourceProperties('AWS::Lambda::Function', {
+    FunctionName: `${StackConfig.name}-get-post-${StackConfig.environment}`,
+  });
+
+  template.resourceCountIs('AWS::Lambda::Function', 2);
 });
