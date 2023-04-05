@@ -1,0 +1,7 @@
+node_modules
+dist
+coverage
+
+!.huskyrc.js
+.commitlintrc.js
+jest.config.js
