@@ -1,13 +1,14 @@
 import { apiGwProxy } from '../../decorators/api-gateway-proxy';
 import { BackendError } from '../../models/error';
 import { getLogger } from '../../utils/logger';
-import { createPostSchema } from '../../validators/schemas/post';
+import { responseGenerator } from '../../utils/response-generator';
+import { updatePostSchema } from '../../validators/schemas/post';
 import type { Post } from '../get-post/types';
 
 import { updatePostByIdInDynamoDB } from './utils';
 
 export const updatePostHandler = apiGwProxy<Omit<Post, 'createdAt' | 'id'>>({
-  schema: createPostSchema,
+  schema: updatePostSchema,
   handler: async (event, context) => {
     const logger = getLogger();
     logger.info(event, 'Event received');
@@ -24,6 +25,6 @@ export const updatePostHandler = apiGwProxy<Omit<Post, 'createdAt' | 'id'>>({
 
     await updatePostByIdInDynamoDB({ id, body });
 
-    return { statusCode: 200, body: JSON.stringify({ message: 'post updated' }) };
+    return responseGenerator({ statusCode: 200, body: { message: 'post updated' } });
   },
 });

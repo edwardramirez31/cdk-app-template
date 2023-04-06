@@ -1,6 +1,7 @@
 import { apiGwProxy } from '../../decorators/api-gateway-proxy';
 import { BackendError } from '../../models/error';
 import { getLogger } from '../../utils/logger';
+import { responseGenerator } from '../../utils/response-generator';
 import type { Post } from '../get-post/types';
 
 import { deletePostByIdInDynamoDB } from './utils';
@@ -20,6 +21,6 @@ export const deletePostHandler = apiGwProxy<Omit<Post, 'createdAt'>>({
 
     await deletePostByIdInDynamoDB(postId);
 
-    return { statusCode: 200, body: JSON.stringify({ message: 'post deleted' }) };
+    return responseGenerator({ statusCode: 200, body: { message: 'post deleted' } });
   },
 });

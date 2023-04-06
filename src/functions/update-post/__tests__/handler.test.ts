@@ -9,7 +9,6 @@ jest.mock('../utils', () => ({
 }));
 
 const post = {
-  id: '123',
   body: 'Lorem Ipsum',
 };
 

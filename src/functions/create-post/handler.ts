@@ -1,5 +1,6 @@
 import { apiGwProxy } from '../../decorators/api-gateway-proxy';
 import { getLogger } from '../../utils/logger';
+import { responseGenerator } from '../../utils/response-generator';
 import { createPostSchema } from '../../validators/schemas/post';
 import type { Post } from '../get-post/types';
 
@@ -18,6 +19,6 @@ export const createPostHandler = apiGwProxy<Omit<Post, 'createdAt'>>({
 
     await createPostInDynamoDB({ id, body, createdAt });
 
-    return { statusCode: 201, body: JSON.stringify({ message: 'post created' }) };
+    return responseGenerator({ statusCode: 201, body: { message: 'post created' } });
   },
 });
