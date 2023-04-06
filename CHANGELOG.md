@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/edwardramirez31/cdk-app-template/compare/v1.2.0...v1.2.1) (2023-04-06)
+
+
+### Bug Fixes
+
+* use response generator util ([7c8b0fe](https://github.com/edwardramirez31/cdk-app-template/commit/7c8b0fe720b402b7fbcb5693c7b5050e559e570c))
+
 # [1.2.0](https://github.com/edwardramirez31/cdk-app-template/compare/v1.1.0...v1.2.0) (2023-04-06)
 
 
