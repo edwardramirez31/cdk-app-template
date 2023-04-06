@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/edwardramirez31/cdk-app-template/compare/v1.0.4...v1.1.0) (2023-04-06)
+
+
+### Features
+
+* adding CRUD app ([83b1043](https://github.com/edwardramirez31/cdk-app-template/commit/83b10438e480fa9448d45b320efa54542c9dee6e))
+
 ## [1.0.4](https://github.com/edwardramirez31/cdk-app-template/compare/v1.0.3...v1.0.4) (2023-04-05)
 
 
