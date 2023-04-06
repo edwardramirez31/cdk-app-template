@@ -30,11 +30,15 @@ export class TemplateStack extends cdk.Stack {
   private setApiEvents(api: RestApi): void {
     const prefix = api.root.addResource('v1');
     const route1 = prefix.addResource('post');
-    const integration1 = new LambdaIntegration(this.lambdaConstruct.createPostFunction);
-    route1.addMethod('POST', integration1);
+    const createPostIntegration = new LambdaIntegration(this.lambdaConstruct.createPostFunction);
+    route1.addMethod('POST', createPostIntegration);
 
     const route2 = route1.addResource('{id}');
-    const integration2 = new LambdaIntegration(this.lambdaConstruct.getPostFunction);
-    route2.addMethod('GET', integration2);
+    const getPostIntegration = new LambdaIntegration(this.lambdaConstruct.getPostFunction);
+    route2.addMethod('GET', getPostIntegration);
+    const updatePostIntegration = new LambdaIntegration(this.lambdaConstruct.updatePostFunction);
+    route2.addMethod('PUT', updatePostIntegration);
+    const deletePostIntegration = new LambdaIntegration(this.lambdaConstruct.deletePostFunction);
+    route2.addMethod('DELETE', deletePostIntegration);
   }
 }

@@ -19,10 +19,10 @@ export class DynamoDatabasesConstruct extends Construct {
         name: 'id',
         type: AttributeType.STRING,
       },
-      sortKey: {
-        name: 'createdAt',
-        type: AttributeType.NUMBER,
-      },
+      // sortKey: {
+      //   name: 'createdAt',
+      //   type: AttributeType.NUMBER,
+      // },
       tableName: `${StackConfig.name}-post-table-${StackConfig.environment}`,
       billingMode: BillingMode.PAY_PER_REQUEST,
     });
