@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/edwardramirez31/cdk-app-template/compare/v1.1.0...v1.2.0) (2023-04-06)
+
+
+### Features
+
+* set update and delete routes ([841c79c](https://github.com/edwardramirez31/cdk-app-template/commit/841c79ca38efbb46de03275ccc39c5c7529e468a))
+
 # [1.1.0](https://github.com/edwardramirez31/cdk-app-template/compare/v1.0.4...v1.1.0) (2023-04-06)
 
 
