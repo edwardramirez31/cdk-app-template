@@ -5,6 +5,7 @@ import { LambdaIntegration } from 'aws-cdk-lib/aws-apigateway';
 import type { Construct } from 'constructs';
 
 import ApisConstruct from './constructs/apis-construct/apis-construct';
+import { DynamoDatabasesConstruct } from './constructs/dynamo-databases-construct/dynamo-databases-construct';
 import LambdaFunctionsConstruct from './constructs/lambda-functions-construct/lambda-functions-construct';
 
 export class TemplateStack extends cdk.Stack {
@@ -15,6 +16,10 @@ export class TemplateStack extends cdk.Stack {
 
     this.lambdaConstruct = new LambdaFunctionsConstruct(this, 'LambdaFunctionsConstruct', {
       level: 'info',
+    });
+
+    new DynamoDatabasesConstruct(this, 'DynamoDatabasesConstruct', {
+      lambdaConstruct: this.lambdaConstruct,
     });
 
     const restApiConstruct = new ApisConstruct(this, 'ApisConstruct');

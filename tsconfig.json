@@ -27,5 +27,5 @@
     "node_modules",
     "cdk.out"
   ],
-  "include": ["./functions/**/*", "lib", "bin"]
+  "include": ["./src/**/*", "lib", "bin"]
 }
