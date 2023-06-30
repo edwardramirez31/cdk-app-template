@@ -50,7 +50,7 @@
   "dependencies": {
     "aws-cdk-lib": "2.62.2",
     "aws-sdk": "^2.1351.0",
-    "constructs": "^10.0.0",
+    "constructs": "^10.2.64",
     "joi": "^17.9.1",
     "pino": "^8.11.0",
     "source-map-support": "^0.5.21"
