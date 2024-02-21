@@ -8,7 +8,7 @@ import ApisConstruct from './constructs/apis-construct/apis-construct';
 import { DynamoDatabasesConstruct } from './constructs/dynamo-databases-construct/dynamo-databases-construct';
 import LambdaFunctionsConstruct from './constructs/lambda-functions-construct/lambda-functions-construct';
 
-export class TemplateStack extends cdk.Stack {
+export class PulsoPolarStack extends cdk.Stack {
   private lambdaConstruct: LambdaFunctionsConstruct;
 
   constructor(scope: Construct, id: string, properties?: StackProps) {
@@ -29,16 +29,16 @@ export class TemplateStack extends cdk.Stack {
 
   private setApiEvents(api: RestApi): void {
     const prefix = api.root.addResource('v1');
-    const route1 = prefix.addResource('post');
-    const createPostIntegration = new LambdaIntegration(this.lambdaConstruct.createPostFunction);
-    route1.addMethod('POST', createPostIntegration);
+    const route1 = prefix.addResource('user');
+    const createUserIntegration = new LambdaIntegration(this.lambdaConstruct.createUserFunction);
+    route1.addMethod('POST', createUserIntegration);
 
     const route2 = route1.addResource('{id}');
-    const getPostIntegration = new LambdaIntegration(this.lambdaConstruct.getPostFunction);
-    route2.addMethod('GET', getPostIntegration);
-    const updatePostIntegration = new LambdaIntegration(this.lambdaConstruct.updatePostFunction);
-    route2.addMethod('PUT', updatePostIntegration);
-    const deletePostIntegration = new LambdaIntegration(this.lambdaConstruct.deletePostFunction);
-    route2.addMethod('DELETE', deletePostIntegration);
+    const getUserIntegration = new LambdaIntegration(this.lambdaConstruct.getUserFunction);
+    route2.addMethod('GET', getUserIntegration);
+    // const updateUserIntegration = new LambdaIntegration(this.lambdaConstruct.updateUserFunction);
+    // route2.addMethod('PUT', updateUserIntegration);
+    // const deleteUserIntegration = new LambdaIntegration(this.lambdaConstruct.deleteUserFunction);
+    // route2.addMethod('DELETE', deleteUserIntegration);
   }
 }

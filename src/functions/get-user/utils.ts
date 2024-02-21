@@ -1,14 +1,14 @@
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 
-import type { Post } from './types';
+import type { User } from './types';
 
-export const getPostByIdFromDynamoDB = async (id: string): Promise<Post | null> => {
+export const getUserByIdFromDynamoDB = async (id: string): Promise<User | null> => {
   const documentClient = new DocumentClient();
 
   const parameters = {
-    TableName: process.env.POSTS_TABLE_NAME || '',
+    TableName: process.env.USERS_TABLE_NAME || '',
     Key: {
-      id,
+      username: id,
     },
   };
 
@@ -18,5 +18,5 @@ export const getPostByIdFromDynamoDB = async (id: string): Promise<Post | null> 
     return null;
   }
 
-  return result.Item as Post;
+  return result.Item as User;
 };

@@ -1,15 +1,15 @@
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 
-import { updatePostByIdInDynamoDB } from '../utils';
+import { updateUserByIdInDynamoDB } from '../utils';
 
 jest.mock('aws-sdk/clients/dynamodb');
 
 const mockedDynamoClient = DocumentClient as jest.MockedClass<typeof DocumentClient>;
 
-test('should update a post in dynamoDB', async () => {
-  const post = {
-    id: '123',
-    body: 'Lorem Ipsum',
+test('should update a user in dynamoDB', async () => {
+  const user = {
+    username: '123',
+    email: 'Lorem Ipsum',
   };
 
   mockedDynamoClient.prototype.update.mockReturnValue({
@@ -17,21 +17,22 @@ test('should update a post in dynamoDB', async () => {
     promise: jest.fn().mockResolvedValueOnce() as unknown,
   });
 
-  const result = await updatePostByIdInDynamoDB(post);
+  const result = await updateUserByIdInDynamoDB(user);
 
   expect(result).toBeUndefined();
 
   expect(DocumentClient.prototype.update).toBeCalledWith({
-    TableName: process.env.POSTS_TABLE_NAME || '',
+    TableName: process.env.USERS_TABLE_NAME || '',
     Key: {
-      id: '123',
+      username: { S: '123' },
+      email: { S: 'Lorem Ipsum' },
     },
-    UpdateExpression: 'set #body = :body',
+    UpdateExpression: 'set #username = :username',
     ExpressionAttributeNames: {
-      '#body': 'body',
+      '#username': 'username',
     },
     ExpressionAttributeValues: {
-      ':body': 'Lorem Ipsum',
+      ':username': { S: '123' },
     },
   });
 });
