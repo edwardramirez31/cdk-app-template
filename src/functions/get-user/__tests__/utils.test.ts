@@ -1,49 +1,48 @@
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 
-import { getPostByIdFromDynamoDB } from '../utils';
+import { getUserByIdFromDynamoDB } from '../utils';
 
 jest.mock('aws-sdk/clients/dynamodb');
 
 const mockedDynamoClient = DocumentClient as jest.MockedClass<typeof DocumentClient>;
 
-test('should return a post', async () => {
-  const post = {
-    id: '123',
-    createdAt: 324_234,
-    body: 'Lorem Ipsum',
+test('should return a user', async () => {
+  const user = {
+    username: '123',
+    email: 'Lorem Ipsum',
   };
 
   mockedDynamoClient.prototype.get.mockReturnValue({
     // @ts-ignore
-    promise: jest.fn().mockResolvedValueOnce({ Item: post }) as unknown,
+    promise: jest.fn().mockResolvedValueOnce({ Item: user }) as unknown,
   });
 
-  const result = await getPostByIdFromDynamoDB('123');
+  const result = await getUserByIdFromDynamoDB('123');
 
-  expect(result).toEqual(post);
+  expect(result).toEqual(user);
 
   expect(DocumentClient.prototype.get).toBeCalledWith({
     TableName: process.env.POSTS_TABLE_NAME || '',
     Key: {
-      id: '123',
+      username: '123',
     },
   });
 });
 
-test('should return null if post not found', async () => {
+test('should return null if user not found', async () => {
   mockedDynamoClient.prototype.get.mockReturnValue({
     // @ts-ignore
     promise: jest.fn().mockResolvedValueOnce({ Item: undefined }) as unknown,
   });
 
-  const result = await getPostByIdFromDynamoDB('123');
+  const result = await getUserByIdFromDynamoDB('123');
 
   expect(result).toBeNull();
 
   expect(DocumentClient.prototype.get).toBeCalledWith({
-    TableName: process.env.POSTS_TABLE_NAME || '',
+    TableName: process.env.USERS_TABLE_NAME || '',
     Key: {
-      id: '123',
+      username: '123',
     },
   });
 });

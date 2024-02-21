@@ -10,7 +10,7 @@ export default class ApisConstruct extends Construct {
   constructor(scope: Construct, id: string) {
     super(scope, id);
 
-    this.apiGateway = new RestApi(this, 'PostRestApi', {
+    this.apiGateway = new RestApi(this, `${StackConfig.name}-api-gateway-${StackConfig.environment}`, {
       cloudWatchRole: true,
       deployOptions: {
         tracingEnabled: true,
@@ -25,7 +25,7 @@ export default class ApisConstruct extends Construct {
       restApiName: `${StackConfig.name}-api-gateway-${StackConfig.environment}`,
     });
 
-    new CfnOutput(this, 'PostRestApiOutputUrl', {
+    new CfnOutput(this, 'PulsoPolarRestApiOutputUrl', {
       value: this.apiGateway.url,
     });
   }

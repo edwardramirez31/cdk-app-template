@@ -3,9 +3,9 @@ import type { APIGatewayProxyHandler } from 'aws-lambda';
 import { getLogger } from '../../utils/logger';
 import { responseGenerator } from '../../utils/response-generator';
 
-import { getPostByIdFromDynamoDB } from './utils';
+import { getUserByIdFromDynamoDB } from './utils';
 
-export const getPostHandler: APIGatewayProxyHandler = async (event, context) => {
+export const getUserHandler: APIGatewayProxyHandler = async (event, context) => {
   const logger = getLogger();
   logger.info(event, 'Event received');
   logger.info(context, 'Context received');
@@ -14,19 +14,19 @@ export const getPostHandler: APIGatewayProxyHandler = async (event, context) => 
   const id = event.pathParameters?.id;
 
   if (!id) {
-    return responseGenerator({ statusCode: 400, body: { message: 'post id should be present' } });
+    return responseGenerator({ statusCode: 400, body: { message: 'user id should be present' } });
   }
 
-  const post = await getPostByIdFromDynamoDB(id);
+  const user = await getUserByIdFromDynamoDB(id);
 
-  if (!post) {
-    return responseGenerator({ statusCode: 404, body: { message: 'post not found' } });
+  if (!user) {
+    return responseGenerator({ statusCode: 404, body: { message: 'user not found' } });
   }
 
   return responseGenerator({
     statusCode: 200,
     body: {
-      item: { ...post },
+      item: { ...user },
     },
   });
 };

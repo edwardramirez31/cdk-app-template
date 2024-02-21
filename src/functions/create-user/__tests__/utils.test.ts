@@ -1,16 +1,15 @@
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 
-import { createPostInDynamoDB } from '../utils';
+import { createUserInDynamoDB } from '../utils';
 
 jest.mock('aws-sdk/clients/dynamodb');
 
 const mockedDynamoClient = DocumentClient as jest.MockedClass<typeof DocumentClient>;
 
-test('should create a post in dynamoDB', async () => {
-  const post = {
-    id: '123',
-    createdAt: 324_234,
-    body: 'Lorem Ipsum',
+test('should create a user in dynamoDB', async () => {
+  const user = {
+    username: '123',
+    email: 'Lorem Ipsum',
   };
 
   mockedDynamoClient.prototype.put.mockReturnValue({
@@ -18,16 +17,15 @@ test('should create a post in dynamoDB', async () => {
     promise: jest.fn().mockResolvedValueOnce() as unknown,
   });
 
-  const result = await createPostInDynamoDB(post);
+  const result = await createUserInDynamoDB(user);
 
   expect(result).toBeUndefined();
 
   expect(DocumentClient.prototype.put).toBeCalledWith({
-    TableName: process.env.POSTS_TABLE_NAME || '',
+    TableName: process.env.USERS_TABLE_NAME || '',
     Item: {
-      id: '123',
-      createdAt: 324_234,
-      body: 'Lorem Ipsum',
+      username: '123',
+      email: 'Lorem Ipsum',
     },
   });
 });

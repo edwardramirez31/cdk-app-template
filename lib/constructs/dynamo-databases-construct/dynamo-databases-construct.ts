@@ -1,4 +1,4 @@
-import { Table, AttributeType, BillingMode } from 'aws-cdk-lib/aws-dynamodb';
+import { Table, BillingMode, AttributeType } from 'aws-cdk-lib/aws-dynamodb';
 import { Construct } from 'constructs';
 
 import { StackConfig } from '../../config/stack-configuration';
@@ -9,27 +9,27 @@ interface DynamoDatabasesConstructProperties {
 }
 
 export class DynamoDatabasesConstruct extends Construct {
-  public readonly postTable: Table;
+  public readonly usersTable: Table;
 
   constructor(scope: Construct, id: string, properties: DynamoDatabasesConstructProperties) {
     super(scope, id);
 
-    this.postTable = new Table(this, 'PostTable', {
+    this.usersTable = new Table(this, 'UserTable', {
       partitionKey: {
-        name: 'id',
+        name: 'username',
         type: AttributeType.STRING,
       },
-      // sortKey: {
-      //   name: 'createdAt',
-      //   type: AttributeType.NUMBER,
-      // },
-      tableName: `${StackConfig.name}-post-table-${StackConfig.environment}`,
+      sortKey: {
+        name: 'email',
+        type: AttributeType.STRING,
+      },
+      tableName: `${StackConfig.name}-user-table-${StackConfig.environment}`,
       billingMode: BillingMode.PAY_PER_REQUEST,
     });
 
-    this.postTable.grantReadWriteData(properties.lambdaConstruct.createPostFunction);
-    this.postTable.grantReadData(properties.lambdaConstruct.getPostFunction);
-    this.postTable.grantReadWriteData(properties.lambdaConstruct.updatePostFunction);
-    this.postTable.grantReadWriteData(properties.lambdaConstruct.deletePostFunction);
+    this.usersTable.grantReadWriteData(properties.lambdaConstruct.createUserFunction);
+    this.usersTable.grantReadData(properties.lambdaConstruct.getUserFunction);
+    this.usersTable.grantReadWriteData(properties.lambdaConstruct.updateUserFunction);
+    // this.usersTable.grantReadWriteData(properties.lambdaConstruct.deleteUserFunction);
   }
 }

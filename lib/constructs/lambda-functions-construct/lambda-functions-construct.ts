@@ -7,60 +7,62 @@ import { StackConfig } from '../../config/stack-configuration';
 import type { LambdaConstructsProperties } from './interfaces';
 
 export default class LambdaFunctionsConstruct extends Construct {
-  public readonly createPostFunction: NodejsFunction;
-  public readonly getPostFunction: NodejsFunction;
-  public readonly updatePostFunction: NodejsFunction;
-  public readonly deletePostFunction: NodejsFunction;
+  public readonly createUserFunction: NodejsFunction;
+  public readonly getUserFunction: NodejsFunction;
+  public readonly updateUserFunction: NodejsFunction;
+  // public readonly deleteUserFunction: NodejsFunction;
+  private readonly dynamoTableName: string;
 
   constructor(scope: Construct, id: string, properties: LambdaConstructsProperties) {
     super(scope, id);
+    this.dynamoTableName = `${StackConfig.name}-user-table-${StackConfig.environment}`;
 
-    this.createPostFunction = new NodejsFunction(this, 'CreatePostFunction', {
-      entry: './src/functions/create-post/handler.ts',
-      handler: 'createPostHandler',
+    this.createUserFunction = new NodejsFunction(this, `${StackConfig.name}-create-user-${StackConfig.environment}`, {
+      entry: './src/functions/create-user/handler.ts',
+      handler: 'createUserHandler',
       runtime: Runtime.NODEJS_18_X,
       tracing: Tracing.ACTIVE,
       environment: {
         PINO_LEVEL: properties.level,
-        POSTS_TABLE_NAME: `${StackConfig.name}-post-table-${StackConfig.environment}`,
+        USERS_TABLE_NAME: this.dynamoTableName,
       },
-      functionName: `${StackConfig.name}-create-post-${StackConfig.environment}`,
+      functionName: `${StackConfig.name}-create-user-${StackConfig.environment}`,
     });
 
-    this.getPostFunction = new NodejsFunction(this, 'GetPostFunction', {
-      entry: './src/functions/get-post/handler.ts',
-      handler: 'getPostHandler',
+    this.getUserFunction = new NodejsFunction(this, `${StackConfig.name}-get-user-${StackConfig.environment}`, {
+      entry: './src/functions/get-user/handler.ts',
+      handler: 'getUserHandler',
       runtime: Runtime.NODEJS_18_X,
       tracing: Tracing.ACTIVE,
       environment: {
         PINO_LEVEL: properties.level,
-        POSTS_TABLE_NAME: `${StackConfig.name}-post-table-${StackConfig.environment}`,
+        USERS_TABLE_NAME: this.dynamoTableName,
       },
-      functionName: `${StackConfig.name}-get-post-${StackConfig.environment}`,
+      functionName: `${StackConfig.name}-get-user-${StackConfig.environment}`,
     });
 
-    this.updatePostFunction = new NodejsFunction(this, 'UpdatePostFunction', {
-      entry: './src/functions/update-post/handler.ts',
-      handler: 'updatePostHandler',
+    this.updateUserFunction = new NodejsFunction(this, `${StackConfig.name}-update-user-${StackConfig.environment}`, {
+      entry: './src/functions/update-user/handler.ts',
+      handler: 'updateUserHandler',
       runtime: Runtime.NODEJS_18_X,
       tracing: Tracing.ACTIVE,
       environment: {
         PINO_LEVEL: properties.level,
-        POSTS_TABLE_NAME: `${StackConfig.name}-post-table-${StackConfig.environment}`,
+        USERS_TABLE_NAME: this.dynamoTableName,
       },
-      functionName: `${StackConfig.name}-update-post-${StackConfig.environment}`,
+      functionName: `${StackConfig.name}-update-user-${StackConfig.environment}`,
     });
 
-    this.deletePostFunction = new NodejsFunction(this, 'DeletePostFunction', {
-      entry: './src/functions/delete-post/handler.ts',
-      handler: 'deletePostHandler',
-      runtime: Runtime.NODEJS_18_X,
-      tracing: Tracing.ACTIVE,
-      environment: {
-        PINO_LEVEL: properties.level,
-        POSTS_TABLE_NAME: `${StackConfig.name}-post-table-${StackConfig.environment}`,
-      },
-      functionName: `${StackConfig.name}-delete-post-${StackConfig.environment}`,
-    });
+    // this.deleteUserFunction = new NodejsFunction(this, `${StackConfig.name}-delete-user-${StackConfig.environment}`, {
+    //   entry: './src/functions/delete-user/handler.ts',
+    //   handler: 'deleteUserHandler',
+    //   runtime: Runtime.NODEJS_18_X,
+    //   tracing: Tracing.ACTIVE,
+    //   environment: {
+    //     PINO_LEVEL: properties.level,
+    //     USERS_TABLE_NAME: this.dynamoTableName,
+    //   },
+    //   functionName: `${StackConfig.name}-delete-user-${StackConfig.environment}`,
+    // });
   }
 }

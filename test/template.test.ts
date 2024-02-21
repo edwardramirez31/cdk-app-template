@@ -2,59 +2,50 @@ import * as cdk from 'aws-cdk-lib';
 import { Template } from 'aws-cdk-lib/assertions';
 
 import { StackConfig } from '../lib/config/stack-configuration';
-import { TemplateStack } from '../lib/template-stack';
+import { PulsoPolarStack } from '../lib/template-stack';
 
 test('Lambda Functions Created', () => {
   const app = new cdk.App();
   // WHEN
-  const stack = new TemplateStack(app, 'MyTestStack');
+  const stack = new PulsoPolarStack(app, 'MyTestStack');
   // THEN
 
   const template = Template.fromStack(stack);
 
   template.hasResourceProperties('AWS::Lambda::Function', {
-    FunctionName: `${StackConfig.name}-create-post-${StackConfig.environment}`,
+    FunctionName: `${StackConfig.name}-create-user-${StackConfig.environment}`,
     Runtime: 'nodejs18.x',
-    Handler: 'index.createPostHandler',
+    Handler: 'index.createUserHandler',
     TracingConfig: {
       Mode: 'Active',
     },
   });
 
   template.hasResourceProperties('AWS::Lambda::Function', {
-    FunctionName: `${StackConfig.name}-get-post-${StackConfig.environment}`,
+    FunctionName: `${StackConfig.name}-get-user-${StackConfig.environment}`,
     Runtime: 'nodejs18.x',
-    Handler: 'index.getPostHandler',
+    Handler: 'index.getUserHandler',
     TracingConfig: {
       Mode: 'Active',
     },
   });
 
   template.hasResourceProperties('AWS::Lambda::Function', {
-    FunctionName: `${StackConfig.name}-delete-post-${StackConfig.environment}`,
+    FunctionName: `${StackConfig.name}-update-user-${StackConfig.environment}`,
     Runtime: 'nodejs18.x',
-    Handler: 'index.deletePostHandler',
+    Handler: 'index.updateUserHandler',
     TracingConfig: {
       Mode: 'Active',
     },
   });
 
-  template.hasResourceProperties('AWS::Lambda::Function', {
-    FunctionName: `${StackConfig.name}-update-post-${StackConfig.environment}`,
-    Runtime: 'nodejs18.x',
-    Handler: 'index.updatePostHandler',
-    TracingConfig: {
-      Mode: 'Active',
-    },
-  });
-
-  template.resourceCountIs('AWS::Lambda::Function', 4);
+  template.resourceCountIs('AWS::Lambda::Function', 3);
 });
 
 test('Rest API Created', () => {
   const app = new cdk.App();
   // WHEN
-  const stack = new TemplateStack(app, 'MyTestStack');
+  const stack = new PulsoPolarStack(app, 'MyTestStack');
   // THEN
 
   const template = Template.fromStack(stack);
@@ -72,13 +63,13 @@ test('Rest API Created', () => {
 test('DynamoDB Table Created', () => {
   const app = new cdk.App();
   // WHEN
-  const stack = new TemplateStack(app, 'MyTestStack');
+  const stack = new PulsoPolarStack(app, 'MyTestStack');
   // THEN
 
   const template = Template.fromStack(stack);
 
   template.hasResourceProperties('AWS::DynamoDB::Table', {
-    TableName: `${StackConfig.name}-post-table-${StackConfig.environment}`,
+    TableName: `${StackConfig.name}-user-table-${StackConfig.environment}`,
     BillingMode: 'PAY_PER_REQUEST',
   });
 
